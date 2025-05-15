@@ -1,0 +1,21 @@
+{
+    "name": "세종대 모바일 신분증",
+    "short_name": "신분증",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ca1c64",
+    "icons": [
+      {
+        "src": "/static/icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/static/icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  

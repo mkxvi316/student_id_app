@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>모바일 신분증</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        .top-bar {
+            background: linear-gradient(to right, #d6286b, #c71e1e);
+            color: white;
+            padding: 12px 16px;
+            position: relative;
+        }
+        .top-bar .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .top-bar .close {
+            position: absolute;
+            right: 16px;
+            top: 12px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .card {
+            padding: 20px;
+            text-align: left;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-text {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        .info-sub {
+            color: gray;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        .photo {
+            width: 90px;
+            border-radius: 6px;
+        }
+        .qrcode {
+            text-align: center;
+            margin: 30px 0 10px;
+        }
+        .qrcode img {
+            width: 200px;
+        }
+        .countdown {
+            text-align: center;
+            font-size: 22px;
+            color: gray;
+            margin-top: 10px;
+        }
+        .notice {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 6px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .footer img {
+            height: 25px;
+        }
+        .reissue {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 16px 0;
+            font-size: 16px;
+        }
+    </style>
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}">
+    <meta name="theme-color" content="#ca1c64">
+    <!-- iOS용 홈화면 아이콘 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon.png') }}">
+</head>
+
+<body>
+    <div class="top-bar">
+        <div class="title">모바일 신분증</div>
+        <div class="close">&times;</div>
+    </div>
+    <div class="card">
+        <div class="info-row">
+            <div class="info-text">
+                {{ name }}<br>
+                {{ student_id }}<br>
+                <span class="info-sub">
+                    소프트웨어융합대학 정보보호학과<br>
+                    재학</span>
+            </div>
+            <img src="{{ url_for('static', filename=photo) }}" class="photo" alt="학생사진">
+        </div>
+        <div class="qrcode">
+            <img src="{{ url_for('static', filename='your_qrcode.png') }}" alt="QR 코드">
+        </div>
+        <div class="countdown" id="countdown">--:-- 남음</div>
+        <div class="notice" id="notice">유효기간이 종료되면 재발급을 받으시기 바랍니다</div>
+        <div class="footer">
+            <img src="{{ url_for('static', filename='sejong_logo.png') }}" alt="세종대학교 로고">
+        </div>
+    </div>
+    <div class="reissue">재발급</div>
+
+    <script>
+        const expiresAt = new Date("{{ expires_at }}");  // ← UTC 시간으로 해석됨
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((expiresAt - now) / 1000); // 초 단위
+
+            const countdownEl = document.getElementById("countdown");
+            const noticeEl = document.getElementById("notice");
+
+            if (diff > 0) {
+                const minutes = String(Math.floor(diff / 60)).padStart(2, '0');
+                const seconds = String(diff % 60).padStart(2, '0');
+                countdownEl.textContent = `${minutes}:${seconds} 남음`;
+            } else {
+                countdownEl.textContent = `만료됨`;
+                noticeEl.textContent = `재발급을 받으시기 바랍니다`;
+                clearInterval(timerInterval);
+            }
+        }
+
+        updateTimer(); // 초기 실행
+        const timerInterval = setInterval(updateTimer, 1000); // 1초마다 갱신
+    </script>
+</body>
+</html>

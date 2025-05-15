@@ -16,9 +16,26 @@
             background: linear-gradient(to right, #d6286b, #ca1c64);
             color: white;
             padding: 12px 16px;
-            text-align: center;
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top-bar .title {
             font-weight: bold;
             font-size: 16px;
+        }
+
+        .top-bar .close {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
         }
 
         .card {
@@ -113,7 +130,7 @@
 <body>
     <div class="top-bar">
         <div class="title">모바일 신분증</div>
-        <div class="close">&times;</div>
+        <div class="close" onclick="window.history.back();">&times;</div>
     </div>
     <div class="card">
         <div class="info-row">

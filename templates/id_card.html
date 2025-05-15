@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모바일 신분증</title>
     <style>
         body {
@@ -10,73 +11,84 @@
             padding: 0;
             background-color: white;
         }
+
         .top-bar {
-            background: linear-gradient(to right, #d6286b, #c71e1e);
+            background: linear-gradient(to right, #d6286b, #ca1c64);
             color: white;
             padding: 12px 16px;
-            position: relative;
-        }
-        .top-bar .title {
             text-align: center;
             font-weight: bold;
             font-size: 16px;
         }
-        .top-bar .close {
-            position: absolute;
-            right: 16px;
-            top: 12px;
-            font-size: 24px;
-            cursor: pointer;
-        }
+
         .card {
-            padding: 20px;
+            padding: 16px;
             text-align: left;
+            max-width: 500px;
+            margin: auto;
         }
+
         .info-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
+
         .info-text {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             line-height: 1.4;
+            flex: 1 1 60%;
+            min-width: 150px;
         }
+
         .info-sub {
             color: gray;
             font-weight: normal;
-            font-size: 14px;
+            font-size: 13px;
         }
+
         .photo {
-            width: 90px;
+            width: 80px;
+            height: auto;
             border-radius: 6px;
+            margin-left: 10px;
         }
+
         .qrcode {
             text-align: center;
-            margin: 30px 0 10px;
+            margin: 24px 0 8px;
         }
+
         .qrcode img {
-            width: 200px;
+            width: 70%;
+            max-width: 220px;
         }
+
         .countdown {
             text-align: center;
-            font-size: 22px;
+            font-size: 20px;
             color: gray;
             margin-top: 10px;
         }
+
         .notice {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
             margin-top: 6px;
         }
+
         .footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
+
         .footer img {
-            height: 25px;
+            height: 20px;
         }
+
         .reissue {
             position: fixed;
             bottom: 0;
@@ -84,9 +96,10 @@
             background: #222;
             color: white;
             text-align: center;
-            padding: 16px 0;
-            font-size: 16px;
+            padding: 14px 0;
+            font-size: 15px;
         }
+
     </style>
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
     <link rel="icon" href="{{ url_for('static', filename='icon.png') }}">
